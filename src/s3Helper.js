@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk');
 var zlib = require('zlib');
+const { DateTime } = require("luxon");
 
 const s3 = new AWS.S3();
 
@@ -10,14 +11,10 @@ function compressData(data) {
 }
 
 function writeToS3(s3Bucket, agency, currentTime, data) {
-  const currentDateTime = new Date(currentTime);
-  const year = currentDateTime.getUTCFullYear();
-  const month = currentDateTime.getUTCMonth()+1;
-  const day = currentDateTime.getUTCDate();
-  const hour = currentDateTime.getUTCHours();
-  const minute = currentDateTime.getUTCMinutes();
-  const second = currentDateTime.getUTCSeconds();
-  const s3Key = `${agency}/${year}/${month}/${day}/${hour}/${minute}/${second}/${agency}-${currentTime}.json.gz`;
+  const currentDateTime = DateTime.utc();
+  const currentTimestamp = currentDateTime.toMillis();
+  const dateTimePathSegment = currentDateTime.toFormat('yyyy/MM/dd/HH/mm');
+  const s3Key = `${agency}/${dateTimePathSegment}/${agency}-${currentTimestamp}.json.gz`;
 
   console.log(`writing s3://${s3Bucket}/${s3Key}`);
 
