@@ -1,6 +1,7 @@
 const axios = require('axios');
 const fs = require('fs');
 const s3Helper = require('./s3Helper');
+const { DateTime } = require("luxon");
 
 const interval = 15000; // ms
 
@@ -66,12 +67,12 @@ setTimeout(function() {
 }, interval - Date.now() % interval);
 
 function saveVehicles() {
-  const currentTime = Date.now();
+  const currentDateTime = DateTime.utc();
 
   const promises = agenciesInfo.map((agencyInfo) => {
     return agencyInfo.provider.getVehicles(agencyInfo.config)
       .then((vehicles) => {
-        return s3Helper.writeToS3(s3Bucket, agencyInfo.id, currentTime, vehicles);
+        return s3Helper.writeToS3(s3Bucket, agencyInfo.id, currentDateTime, vehicles);
       })
       .catch((err) => {
         console.log(err);
