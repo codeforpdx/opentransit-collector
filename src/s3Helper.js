@@ -12,7 +12,8 @@ function compressData(data) {
 function writeToS3(s3Bucket, agency, currentDateTime, data) {
   const currentTimestamp = currentDateTime.toMillis();
   const dateTimePathSegment = currentDateTime.toFormat('yyyy/MM/dd/HH/mm');
-  const s3Key = `${agency}/${dateTimePathSegment}/${agency}-${currentTimestamp}.json.gz`;
+  const version = 'v1';
+  const s3Key = `state/${version}/${agency}/${dateTimePathSegment}/${agency}_${version}_${currentTimestamp}.json.gz`;
 
   console.log(`writing s3://${s3Bucket}/${s3Key}`);
 
