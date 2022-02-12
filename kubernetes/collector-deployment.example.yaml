@@ -1,0 +1,59 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: opentransit-collector
+  name: opentransit-collector
+spec:
+  selector:
+    matchLabels:
+      run: opentransit-collector
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: opentransit-collector
+    spec:
+      containers:
+      - image: gcr.io/YOUR_GCP_PROJECT_ID/opentransit-collector:latest
+        imagePullPolicy: IfNotPresent
+        name: opentransit-collector
+        resources:
+          requests:
+            cpu: 0.03
+        env:
+          - name: OPENTRANSIT_COLLECTOR_CONFIG_JSON
+            value: >
+              {
+                 "s3_bucket": "YOUR_S3_BUCKET_HERE",
+                 "agencies": [
+                   {
+                     "id": "muni",
+                     "provider": "nextbus",
+                     "nextbus_agency_id": "sf-muni"
+                   },
+                   {
+                     "id": "trimet",
+                     "provider": "gtfs-realtime",
+                     "gtfs_realtime_url": "https://developer.trimet.org/ws/V1/VehiclePositions?appID=YOUR_TRIMET_APP_ID"
+                   },
+                   {
+                     "id": "marin",
+                     "provider": "marin"
+                   }
+                 ]
+              }
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: aws-credentials
+                key: aws_access_key_id
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: aws-credentials
+                key: aws_secret_access_key
