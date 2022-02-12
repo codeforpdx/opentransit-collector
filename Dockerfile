@@ -13,7 +13,7 @@ COPY . .
 CMD [ "npm", "run", "start" ]
 
 # Build
-# docker build -t orion .
+# docker build -t opentransit-collector .
 
 # Run
-# docker run orion:latest
+# docker run opentransit-collector:latest

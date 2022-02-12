@@ -1,5 +1,5 @@
 {
-  "name": "orion",
+  "name": "opentransit-collector",
   "version": "1.1.0",
   "description": "Finds realtime transit data and sends it to S3",
   "main": "src/index.js",
@@ -9,13 +9,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/trynmaps/orion.git"
+    "url": "git+https://github.com/codeforpdx/opentransit-collector.git"
   },
   "author": "Eddy",
   "bugs": {
-    "url": "https://github.com/trynmaps/orion/issues"
+    "url": "https://github.com/codeforpdx/opentransit-collector/issues"
   },
-  "homepage": "https://github.com/trynmaps/orion#readme",
+  "homepage": "https://github.com/codeforpdx/opentransit-collector",
   "dependencies": {
     "aws-sdk": "^2.238.1",
     "axios": "^0.16.2",
