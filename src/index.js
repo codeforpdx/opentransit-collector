@@ -4,16 +4,16 @@ const s3Helper = require('./s3Helper');
 
 const interval = 15000; // ms
 
-const configPath = process.env.ORION_CONFIG_PATH;
-const configJson = process.env.ORION_CONFIG_JSON;
+const configPath = process.env.OPENTRANSIT_COLLECTOR_CONFIG_PATH;
+const configJson = process.env.OPENTRANSIT_COLLECTOR_CONFIG_JSON;
 
 if (!configJson && !configPath) {
-    throw new Error("Missing ORION_CONFIG_JSON or ORION_CONFIG_PATH environment variable");
+    throw new Error("Missing OPENTRANSIT_COLLECTOR_CONFIG_JSON or OPENTRANSIT_COLLECTOR_CONFIG_PATH environment variable");
 }
 
 let config;
 if (configJson) {
-    console.log("reading config from ORION_CONFIG_JSON");
+    console.log("reading config from OPENTRANSIT_COLLECTOR_CONFIG_JSON");
     config = JSON.parse(configJson);
 } else {
     console.log("reading config from " + configPath);

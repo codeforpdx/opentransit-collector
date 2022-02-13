@@ -1,7 +1,7 @@
 version: "3.7"
 services:
-  orion-dev:
-    container_name: orion-dev
+  collector-dev:
+    container_name: collector-dev
     build:
       dockerfile: Dockerfile
       context: .

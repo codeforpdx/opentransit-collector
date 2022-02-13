@@ -61,7 +61,7 @@ function makeVehicle(gtfsVehiclePosition, feedTimestamp) {
       currentStatus,
     } = gtfsVehiclePosition;
 
-    const orionVehicle = {
+    const collectorVehicle = {
       rid: trip.routeId,
       vid: vehicle.id,
       lat: Math.round(position.latitude*100000)/100000, // 14 digits of lat/lon precision is a bit overkill :0 https://xkcd.com/2170/
@@ -74,13 +74,13 @@ function makeVehicle(gtfsVehiclePosition, feedTimestamp) {
     };
 
     if (stopId != '') {
-      orionVehicle.stopId = stopId;
+      collectorVehicle.stopId = stopId;
     }
     if (vehicle.label != '') {
-      orionVehicle.label = vehicle.label;
+      collectorVehicle.label = vehicle.label;
     }
 
-    return orionVehicle;
+    return collectorVehicle;
 }
 
 module.exports = {
