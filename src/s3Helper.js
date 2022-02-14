@@ -9,15 +9,11 @@ function compressData(data) {
   });
 }
 
-function writeToS3(s3Bucket, agency, currentTime, data) {
-  const currentDateTime = new Date(currentTime);
-  const year = currentDateTime.getUTCFullYear();
-  const month = currentDateTime.getUTCMonth()+1;
-  const day = currentDateTime.getUTCDate();
-  const hour = currentDateTime.getUTCHours();
-  const minute = currentDateTime.getUTCMinutes();
-  const second = currentDateTime.getUTCSeconds();
-  const s3Key = `${agency}/${year}/${month}/${day}/${hour}/${minute}/${second}/${agency}-${currentTime}.json.gz`;
+function writeToS3(s3Bucket, agency, currentDateTime, data) {
+  const currentTimestamp = currentDateTime.toMillis();
+  const dateTimePathSegment = currentDateTime.toFormat('yyyy/MM/dd/HH/mm');
+  const version = 'v1';
+  const s3Key = `state/${version}/${agency}/${dateTimePathSegment}/${agency}_${version}_${currentTimestamp}.json.gz`;
 
   console.log(`writing s3://${s3Bucket}/${s3Key}`);
 
