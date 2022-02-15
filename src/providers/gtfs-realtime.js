@@ -62,10 +62,10 @@ function makeVehicle(gtfsVehiclePosition, feedTimestamp) {
     } = gtfsVehiclePosition;
 
     const collectorVehicle = {
-      rid: trip.routeId,
-      vid: vehicle.id,
-      lat: Math.round(position.latitude*100000)/100000, // 14 digits of lat/lon precision is a bit overkill :0 https://xkcd.com/2170/
-      lon: Math.round(position.longitude*100000)/100000,
+      routeId: trip.routeId,
+      vehicleId: vehicle.id,
+      latitude: Math.round(position.latitude*100000)/100000, // 14 digits of lat/lon precision is a bit overkill :0 https://xkcd.com/2170/
+      longitude: Math.round(position.longitude*100000)/100000,
       heading: position.bearing,
       tripId: trip.tripId,
       stopIndex: currentStopSequence,
