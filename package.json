@@ -19,13 +19,17 @@
   "dependencies": {
     "aws-sdk": "^2.238.1",
     "axios": "^0.16.2",
-    "luxon": "^2.3.0",
     "fs": "0.0.1-security",
     "gtfs-realtime-bindings": "^0.0.5",
+    "luxon": "^2.3.0",
     "request": "^2.88.0",
     "zlib": "^1.0.5"
   },
   "devDependencies": {
+    "jest": "^27.5.1",
     "lodash": "^4.17.11"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }

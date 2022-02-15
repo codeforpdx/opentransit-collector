@@ -1,5 +1,6 @@
 var request = require('request');
 var GtfsRealtimeBindings = require('gtfs-realtime-bindings');
+const { reject } = require('lodash');
 
 function getVehicles(config) {
     const url = config.gtfs_realtime_url;
@@ -16,7 +17,13 @@ function getVehicles(config) {
           if (error) {
             reject(error);
           } else if (response.statusCode == 200) {
-            const feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(body);
+            //const feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(body);
+            let feed;
+            try {
+              feed = getFeed(GtfsRealtimeBindings.transit_realtime.FeedMessage, body);
+            } catch(e) {
+              reject(e);
+            }
             const vehicles = [];
             const feedTimestamp = feed.header.timestamp;
             feed.entity.forEach(function(entity) {
@@ -34,6 +41,20 @@ function getVehicles(config) {
           }
         });
     });
+}
+
+// getFeed contains logic for decoding a json payload and any error handling
+// decoder param should be of type GtfsRealtimeBindings.transit_realtime.FeedMessage
+function getFeed(decoder, body) {
+  let feed; 
+  try {
+    feed = decoder.decode(body);
+  } catch (e) {
+    console.log(e)
+    throw new Error("error parsing gtfs feed:", e);
+  }
+
+  return feed;
 }
 
 function makeVehicle(gtfsVehiclePosition, feedTimestamp) {
@@ -85,4 +106,5 @@ function makeVehicle(gtfsVehiclePosition, feedTimestamp) {
 
 module.exports = {
    getVehicles,
+   getFeed,
 };
