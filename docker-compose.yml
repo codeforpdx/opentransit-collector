@@ -2,6 +2,7 @@ version: "3.7"
 services:
   collector-dev:
     container_name: collector-dev
+    restart: always
     build:
       dockerfile: Dockerfile
       context: .
