@@ -31,9 +31,7 @@ if (!config.s3_bucket) {
 
 const providerNames = [
     'nextbus',
-    'marin',
     'gtfs-realtime',
-    'gtfs-trimet',
 ];
 
 const s3Bucket = config.s3_bucket;
