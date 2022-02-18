@@ -1,10 +1,27 @@
 const { getFeed } = require('./gtfs-realtime')
 var GtfsRealtimeBindings = require('gtfs-realtime-bindings');
-var protobuf = require("protobufjs/minimal");
-var enc = new TextEncoder(); // TextEncoder needed to make an UInt8Array that gtfs-realtime-bindings needs for decoding
+var fm = GtfsRealtimeBindings.transit_realtime.FeedMessage; 
+var fs = require('fs');
+const { fail } = require('assert');
 
 test("normal decode should occur", () => {
-    var feedBody = `agency_id,agency_name,agency_url,agency_timezone,agency_phone,agency_lang
-FunBus,The Fun Bus,http://www.thefunbus.org,America/Los_Angeles,(310) 555-0222,en`
-    expect(getFeed(GtfsRealtimeBindings.transit_realtime.FeedMessage, enc.encode(feedBody)));
+    let data;
+    try {
+        data = fs.readFileSync("./src/providers/test_data/valid_feed_data.pb");
+    } catch (e) {
+        fail(e);
+    }
+    expect(() => { getFeed(fm, data) }).toEqual(expect.anything());
+    expect(() => { getFeed(fm, data) }).not.toThrow();
+});
+
+test("should throw an error on bad data", () => {
+    let data;
+    try {
+        data = fs.readFileSync("./src/providers/test_data/invalid_feed_data.pb");
+    } catch (e) {
+        fail(e);
+    }
+
+    expect(() => { getFeed(fm, data) }).toThrow("error parsing gtfs feed");
 });

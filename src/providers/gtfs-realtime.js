@@ -17,7 +17,8 @@ function getVehicles(config) {
           if (error) {
             reject(error);
           } else if (response.statusCode == 200) {
-            //const feed = GtfsRealtimeBindings.transit_realtime.FeedMessage.decode(body);
+            /*console.log("body")
+            console.log(body.toString())*/
             let feed;
             try {
               feed = getFeed(GtfsRealtimeBindings.transit_realtime.FeedMessage, body);
@@ -43,15 +44,14 @@ function getVehicles(config) {
     });
 }
 
-// getFeed contains logic for decoding a json payload and any error handling
+// getFeed contains logic for decoding a gtfs payload and any error handling
 // decoder param should be of type GtfsRealtimeBindings.transit_realtime.FeedMessage
 function getFeed(decoder, body) {
   let feed; 
   try {
     feed = decoder.decode(body);
   } catch (e) {
-    console.log(e)
-    throw new Error("error parsing gtfs feed:", e);
+    throw new Error("error parsing gtfs feed: " + e);
   }
 
   return feed;
