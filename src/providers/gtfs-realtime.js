@@ -17,8 +17,6 @@ function getVehicles(config) {
           if (error) {
             reject(error);
           } else if (response.statusCode == 200) {
-            /*console.log("body")
-            console.log(body.toString())*/
             let feed;
             try {
               feed = getFeed(GtfsRealtimeBindings.transit_realtime.FeedMessage, body);
