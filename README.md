@@ -51,6 +51,14 @@ services:
 
 To test, run `docker-compose up`.
 
+## Unit Tests
+
+We use the Jest unit testing framework for some simple testing. To run the unit tests, run the following command at the root of the repo:
+
+```
+npm run test
+```
+
 ## Prerequisites
 
 Docker
