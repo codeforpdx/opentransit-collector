@@ -56,7 +56,8 @@ To test, run `docker-compose up`.
 We use the Jest unit testing framework for some simple testing. To run the unit tests, run the following command at the root of the repo:
 
 ```
-npm run test
+docker build -t opentransit-collector .
+docker run opentransit-collector npm run test
 ```
 
 ## Prerequisites
