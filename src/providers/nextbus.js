@@ -5,7 +5,7 @@ function getVehicles(config) {
       throw new Error("nextbus config missing nextbus_agency_id");
     }
 
-    const url = 'http://webservices.nextbus.com/service/publicJSONFeed?command=vehicleLocations&t=0&a='+config.nextbus_agency_id;
+    const url = 'https://retro.umoiq.com/service/publicJSONFeed?command=vehicleLocations&t=0&a='+config.nextbus_agency_id;
     console.log('fetching vehicles from ' + url);
     return axios.get(url)
         .then((response) => {
@@ -43,14 +43,14 @@ function makeVehicle(nextbusObject) {
     var secsSinceReportInt = parseInt(secsSinceReport, 10);
 
     return {
-      rid: routeTag,
-      vid: id,
-      lat: latFloat,
-      lon: lonFloat,
+      routeId: routeTag,
+      vehicleId: id,
+      latitude: latFloat,
+      longitude: lonFloat,
       heading: isNaN(headingInt) ? null : headingInt,
-      did: dirTag,
+      directionTag: dirTag,
       secsSinceReport: secsSinceReportInt,
-      leadingVid: leadingVehicleId,
+      leadingVehicleId: leadingVehicleId,
     };
 }
 
