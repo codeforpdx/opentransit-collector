@@ -20,6 +20,7 @@ function writeToS3(s3Bucket, agency, currentDateTime, data) {
   return compressData(data).then(encodedData => {
     return new Promise((resolve, reject) => {
       s3.putObject({
+        ACL: "public-read",
         Bucket: s3Bucket,
         Key: s3Key,
         Body: encodedData,
