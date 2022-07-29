@@ -1,6 +1,6 @@
 const axios = require('axios');
 const fs = require('fs');
-const ioHelper = require('./storeHelper');
+const writeHelper = require('./writeHelper');
 const { DateTime } = require("luxon");
 
 const interval = 15000; // ms
@@ -73,10 +73,10 @@ function saveVehicles() {
     return agencyInfo.provider.getVehicles(agencyInfo.config)
       .then((vehicles) => {
         if (storeLocal()) {
-            return ioHelper.writeLocal(agencyInfo.id, currentDateTime, vehicles);
+            return writeHelper.writeLocal(agencyInfo.id, currentDateTime, vehicles);
         }
 
-        return s3Helper.writeToS3(s3Bucket, agencyInfo.id, currentDateTime, vehicles);
+        return writeHelper.writeToS3(s3Bucket, agencyInfo.id, currentDateTime, vehicles);
       })
       .catch((err) => {
         console.log(err);
