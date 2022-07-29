@@ -7,7 +7,6 @@ WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm install
 
-
 # Bundle app source
 COPY . .
 
