@@ -51,6 +51,30 @@ services:
 
 To test, run `docker-compose up`.
 
+## Local Usage 
+We have the option of writing the JSON response data from the providers locally instead of storing it to S3. If you're developing locally and need to test, this is preferable as to avoid writing too much
+similar data to S3.
+
+Instead of the above docker-compose file, run this instead:
+```
+docker-compose -f local-docker-compose.yml up
+```
+
+**Caveat**: this means that the files will be stored in the docker container. It's an annoyance but the files will still be viewable if you enter the docker container with bash.
+
+First, list your currently running containers: 
+```
+docker ps
+```
+
+and get the `Container ID` of the opentransit-collector container. Then run:
+```
+docker exec -it <container-ID> bash
+cd /tmp
+```
+
+As to keep the container's working directory clean, the data will be stored in `/tmp`, hence that above command.
+
 ## Unit Tests
 
 We use the Jest unit testing framework for some simple testing. To run the unit tests, run the following command at the root of the repo:

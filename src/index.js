@@ -1,12 +1,13 @@
 const axios = require('axios');
 const fs = require('fs');
-const s3Helper = require('./s3Helper');
+const ioHelper = require('./storeHelper');
 const { DateTime } = require("luxon");
 
 const interval = 15000; // ms
 
 const configPath = process.env.OPENTRANSIT_COLLECTOR_CONFIG_PATH;
 const configJson = process.env.OPENTRANSIT_COLLECTOR_CONFIG_JSON;
+const storeLocalEnv = process.env.STORE_LOCAL;
 
 if (!configJson && !configPath) {
     throw new Error("Missing OPENTRANSIT_COLLECTOR_CONFIG_JSON or OPENTRANSIT_COLLECTOR_CONFIG_PATH environment variable");
@@ -25,7 +26,7 @@ if (!config || !config.agencies || !config.agencies.length) {
     throw new Error("No agencies specified in config.");
 }
 
-if (!config.s3_bucket) {
+if (!config.s3_bucket && !storeLocal()) {
     throw new Error("No s3_bucket specified in config.");
 }
 
@@ -71,6 +72,10 @@ function saveVehicles() {
   const promises = agenciesInfo.map((agencyInfo) => {
     return agencyInfo.provider.getVehicles(agencyInfo.config)
       .then((vehicles) => {
+        if (storeLocal()) {
+            return ioHelper.writeLocal(agencyInfo.id, currentDateTime, vehicles);
+        }
+
         return s3Helper.writeToS3(s3Bucket, agencyInfo.id, currentDateTime, vehicles);
       })
       .catch((err) => {
@@ -79,4 +84,8 @@ function saveVehicles() {
   });
 
   Promise.all(promises);
+}
+
+function storeLocal() {
+    return storeLocalEnv == "true";
 }
