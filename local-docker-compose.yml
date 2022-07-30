@@ -15,9 +15,9 @@ services:
                     "nextbus_agency_id": "portland-sc"
                 },
                 {
-                    "id": "trimet",
-                    "provider": "gtfs-realtime",
-                    "nextbus_agency_id": "trimet"
+                  "id": "trimet",
+                  "provider": "gtfs-realtime",
+                  "gtfs_realtime_url": "https://developer.trimet.org/ws/V1/VehiclePositions?appID=D250D757BEDC0CC1DE086C2B4"
                 }
             ]
         }
