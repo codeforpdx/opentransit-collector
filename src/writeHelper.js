@@ -1,4 +1,5 @@
 const AWS = require('aws-sdk');
+const fs = require('fs');
 var zlib = require('zlib');
 
 const s3 = new AWS.S3();
@@ -7,6 +8,21 @@ function compressData(data) {
   return new Promise((resolve, _) => {
     return zlib.gzip(JSON.stringify(data), (_, encoded) => resolve(encoded));
   });
+}
+
+// writeLocal will perform similarly to writeToS3 except save the file locally. It won't be compressed as to
+// make for easier local debugging.
+function writeLocal(agency, currentDateTime, data) {
+  const currentTimestamp = currentDateTime.toMillis();
+  const version = "v1";
+  const fileName = `/tmp/${agency}_${version}_${currentTimestamp}.json`
+
+  fs.writeFile(fileName, JSON.stringify(data), err => {
+    if (err) {
+      console.error(err);
+    }
+    console.log("wrote", fileName)
+  }); 
 }
 
 function writeToS3(s3Bucket, agency, currentDateTime, data) {
@@ -38,5 +54,6 @@ function writeToS3(s3Bucket, agency, currentDateTime, data) {
 };
 
 module.exports = {
-    writeToS3
+    writeToS3,
+    writeLocal
 };
