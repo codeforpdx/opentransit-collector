@@ -2,7 +2,7 @@
 version: "3.7"
 services:
   collector-dev:
-    container_name: collector-dev
+    container_name: local-collector-dev
     restart: always
     environment:
       STORE_LOCAL: "true"

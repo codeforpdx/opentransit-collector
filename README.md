@@ -60,20 +60,23 @@ Instead of the above docker-compose file, run this instead:
 docker-compose -f local-docker-compose.yml up
 ```
 
-**Caveat**: this means that the files will be stored in the docker container. It's an annoyance but the files will still be viewable if you enter the docker container with bash.
-
-First, list your currently running containers: 
+This command will start a docker container called `local-collector-dev`. You can verify the container is running by starting a new terminal, changing directories to this repo, and then running:
 ```
 docker ps
 ```
-
-and get the `Container ID` of the opentransit-collector container. Then run:
+You should see something like this (below) with `local-collector-dev` under `NAMES`:
 ```
-docker exec -it <container-ID> bash
-cd /tmp
+CONTAINER ID   IMAGE                                 COMMAND           CREATED         STATUS         PORTS     NAMES
+9a05f60162de   opentransit-collector_collector-dev   "npm run start"   5 minutes ago   Up 8 seconds             local-collector-dev
 ```
 
-As to keep the container's working directory clean, the data will be stored in `/tmp`, hence that above command.
+**Caveat**: The local process will store the json responses in the docker container in the `/tmp` directory. It's an annoyance but you can copy the files locally with the following command.
+```
+docker cp local-collector-dev:/tmp .
+```
+The `local-collector-dev:/tmp` is the "source" to be copied and the `.` is the "destination". In this case, `.` means "current directory". If you want to change the destination, feel free to change the destination. 
+
+Note that `tmp/*` has been added to the `.gitignore` file.
 
 ## Unit Tests
 
