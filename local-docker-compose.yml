@@ -1,0 +1,28 @@
+# docker compose file used for storing data locally instead of S3.
+version: "3.7"
+services:
+  collector-dev:
+    container_name: local-collector-dev
+    restart: always
+    environment:
+      STORE_LOCAL: "true"
+      OPENTRANSIT_COLLECTOR_CONFIG_JSON: >
+        {
+            "agencies": [
+                {
+                    "id": "portland-sc",
+                    "provider": "nextbus",
+                    "nextbus_agency_id": "portland-sc"
+                },
+                {
+                  "id": "trimet",
+                  "provider": "gtfs-realtime",
+                  "gtfs_realtime_url": "https://developer.trimet.org/ws/V1/VehiclePositions?appID=D250D757BEDC0CC1DE086C2B4"
+                }
+            ]
+        }
+    build:
+      dockerfile: Dockerfile
+      context: .
+    volumes:
+      - ./src:/usr/src/app/src
