@@ -78,12 +78,15 @@ function saveVehicles() {
 
         return writeHelper.writeToS3(s3Bucket, agencyInfo.id, currentDateTime, vehicles);
       })
-      .catch((err) => {
-        console.log(err);
-      });
   });
 
-  Promise.all(promises);
+  // Do not reject all promises when one of them is rejected, but do output why one was rejected.
+  Promise.allSettled(promises)
+    .then((results) => results.forEach((result) => {
+        if(result.status == "rejected") {
+            console.log("received a rejected promise with reason: " + result.reason)
+        }
+    }));
 }
 
 function storeLocal() {
