@@ -80,11 +80,11 @@ function saveVehicles() {
       })
   });
 
-  // Do not reject all promises when one of them is rejected, but do output why one was rejected.
+  // Do not reject all promises when one of them is rejected, but do output why one (or more) was rejected.
   Promise.allSettled(promises)
     .then((results) => results.forEach((result) => {
         if(result.status == "rejected") {
-            console.log("received a rejected promise with reason: " + result.reason)
+            console.log("received a rejected promise with reason:", result.reason)
         }
     }));
 }
