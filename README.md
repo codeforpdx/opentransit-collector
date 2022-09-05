@@ -32,19 +32,15 @@ services:
          "s3_bucket": "my-opentransit-bucket",
          "agencies": [
            {
-             "id": "muni",
-             "provider": "nextbus",
-             "nextbus_agency_id": "sf-muni"
+             "id": "trimet",
+             "provider": "gtfs-realtime",
+             "gtfs_realtime_url": "https://developer.trimet.org/ws/V1/VehiclePositions?appID=XXX"
            },
-           {
-             "id": "ttc",
-             "provider": "nextbus",
-             "nextbus_agency_id": "ttc"
-           },
-           {
-             "id": "marin",
-             "provider": "marin"
-           }
+            {
+              "id": "portland-sc",
+              "provider": "nextbus",
+              "nextbus_agency_id": "portland-sc"
+            }
          ]
         }
 ```
