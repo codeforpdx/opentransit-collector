@@ -17,16 +17,11 @@ function writeLocal(agency, currentDateTime, data) {
   const version = "v1";
   const fileName = `/tmp/${agency}_${version}_${currentTimestamp}.json`
 
-  return new Promise((resolve, reject) => { 
-    fs.writeFile(fileName, JSON.stringify(data), err => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
-      console.log("wrote", fileName)
-    }); 
-  })
+  return writeFile(fileName, JSON.stringify(data))
+    .then((data) => {
+      console.log("wrote", fileName);
+      return data;
+    });
 }
 
 function writeToS3(s3Bucket, agency, currentDateTime, data) {
