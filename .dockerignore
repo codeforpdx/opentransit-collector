@@ -2,3 +2,4 @@ node_modules
 .git
 docker-compose.yml
 Dockerfile*
+local.config.json
