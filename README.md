@@ -63,8 +63,25 @@ Docker containers ensure a consistent environment, but are more power intensive 
 STORE_LOCAL="true"
 OPENTRANSIT_COLLECTOR_CONFIG_PATH='./local.config.json'
 ```
+3. Create `local.config.json` with the following content:
+```json
+{
+  "agencies": [
+    {
+      "id": "portland-sc",
+      "provider": "nextbus",
+      "nextbus_agency_id": "portland-sc"
+    },
+    {
+      "id": "trimet",
+      "provider": "gtfs-realtime",
+      "gtfs_realtime_url": "https://developer.trimet.org/ws/V1/VehiclePositions?appID=D250D757BEDC0CC1DE086C2B4"
+    }
+  ]
+}
+```
 
-3. Run `npm run start`
+4. Run `npm run start`
 
 Files will be written to `/tmp`. The path is printed on the command line.
 

@@ -3,3 +3,4 @@ DS_STORE
 docker-compose.override.yml
 tmp/*
 .env
+local.config.json
