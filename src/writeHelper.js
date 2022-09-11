@@ -1,8 +1,10 @@
 const AWS = require('aws-sdk');
-const fs = require('fs');
+const s3 = new AWS.S3();
+const { writeFile }  = require('fs/promises');
+
 var zlib = require('zlib');
 
-const s3 = new AWS.S3();
+
 
 function compressData(data) {
   return new Promise((resolve, _) => {
@@ -17,12 +19,11 @@ function writeLocal(agency, currentDateTime, data) {
   const version = "v1";
   const fileName = `/tmp/${agency}_${version}_${currentTimestamp}.json`
 
-  fs.writeFile(fileName, JSON.stringify(data), err => {
-    if (err) {
-      console.error(err);
-    }
-    console.log("wrote", fileName)
-  }); 
+  return writeFile(fileName, JSON.stringify(data))
+    .then((data) => {
+      console.log("wrote", fileName);
+      return data;
+    });
 }
 
 function writeToS3(s3Bucket, agency, currentDateTime, data) {
