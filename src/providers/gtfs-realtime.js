@@ -1,6 +1,5 @@
 var request = require('request');
 var GtfsRealtimeBindings = require('gtfs-realtime-bindings');
-const { reject } = require('lodash');
 
 function getVehicles(config) {
     const url = config.gtfs_realtime_url;

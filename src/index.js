@@ -1,4 +1,4 @@
-const axios = require('axios');
+require("dotenv").config();
 const fs = require('fs');
 const writeHelper = require('./writeHelper');
 const { DateTime } = require("luxon");

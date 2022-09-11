@@ -47,9 +47,28 @@ services:
 
 To test, run `docker-compose up`.
 
-## Local Usage 
-We have the option of writing the JSON response data from the providers locally instead of storing it to S3. If you're developing locally and need to test, this is preferable as to avoid writing too much
-similar data to S3.
+## Local Development
+You have two options for running the app locally:
+
+1. Directly via `npm run start`
+2. Inside a docker container
+
+Docker containers ensure a consistent environment, but are more power intensive and more difficult to work with. Both options **won't** write data to S3. Choose the option that works best for your needs
+### Directly via `npm run start`
+
+1. Run `npm install`
+2. Create a `.env` file with the following content:
+
+```
+STORE_LOCAL="true"
+OPENTRANSIT_COLLECTOR_CONFIG_PATH='./local.config.json'
+```
+
+3. Run `npm run start`
+
+Files will be written to `/tmp`. The path is printed on the command line.
+
+### Inside a docker container
 
 Instead of the above docker-compose file, run this instead:
 ```
