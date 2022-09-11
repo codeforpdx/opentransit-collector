@@ -5,6 +5,7 @@ services:
     container_name: local-collector-dev
     restart: always
     environment:
+      STORE_LOCAL: "true"
       OPENTRANSIT_COLLECTOR_CONFIG_JSON: >
         {
             "agencies": [
